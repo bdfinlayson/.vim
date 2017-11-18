@@ -177,6 +177,13 @@ let g:deoplete#enable_at_startup = 1
 " VIM NOTES
 let g:notes_directories = ['/workspace/NOTES']
 
+" SPLIT TERM
+" mappings for switching buffers while in the neovim terminal
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+
 "=============================
 "VIM-PLUG Manager:
 "=============================
@@ -204,6 +211,7 @@ Plug 'tmhedberg/matchit'
 Plug 'kana/vim-vspec'
 Plug 'kana/vim-textobj-user'
 Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'mklabs/split-term.vim'
 call plug#end()
 
 "NeoMake linter
