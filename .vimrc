@@ -6,6 +6,10 @@ let g:multi_cursor_use_default_mapping=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 
+" Use Vim's native file explorer NETRW
+filetype plugin on
+
+set nocompatible
 set mouse:a
 set showcmd
 set noerrorbells
@@ -43,8 +47,6 @@ nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 let mapleader = "\\"
 
 "WINDOW MANAGEMENT:
-"Toggle NerdTree
-map <leader>n :NERDTreeToggle<CR>
 "Open with grid layout view
 map <leader>4 :q<cr>:vsplit<cr>:split<cr>:wincmd l<cr>:split<cr>:wincmd h<cr>
 "Open with 2 windows horizontally split
@@ -184,6 +186,18 @@ tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
+" NETRW FILE EXPLORER
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call NetrwMapping()
+augroup END
+
+function! NetrwMapping()
+  nnoremap <buffer> <c-l> <c-w>l
+endfunction
+
+map <C-a>0 :Lexplore<cr>
+
 "=============================
 "VIM-PLUG Manager:
 "=============================
@@ -194,7 +208,6 @@ Plug 'neomake/neomake'
 Plug 'kien/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'eugen0329/vim-esearch'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'kassio/neoterm'
