@@ -1,122 +1,31 @@
-""
-"" Customisations
-""
-let g:indent_guides_auto_colors = 0
-let g:multi_cursor_use_default_mapping=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=black
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
+"=============================
+"VIM-PLUG Manager:
+"=============================
 
-" Use Vim's native file explorer NETRW
-filetype plugin on
-
-set nocompatible
-set mouse:a
-set showcmd
-set noerrorbells
-set showmatch
-set autoindent
-set guifont=Inconsolata\ for\ Powerline:h15
-set encoding=utf-8
-set t_Co=256
-set fillchars+=stl:\ ,stlnc:\
-set termencoding=utf-8
-set cursorline
-set equalalways
-set conceallevel=0
-let g:vim_json_syntax_conceal = 0
-set number
-set smartindent
-set autoindent
-set shiftwidth=2
-set tabstop=2
-set expandtab
-
-" Search Highlighting
-" turn on by default
-set nohlsearch
-" toggle highlighting on and off
-map <leader>hh :set hlsearch! hlsearch?<cr>
-
-nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
-
-"=========================
-"YOUR CUSTOM MAPPINGS:
-"=========================
-"***SEE VIM KEY-NOTATION IN VIM HELP FOR HELP WITH VARIOUS KEY-CODES**
-
-let mapleader = "\\"
-
-"WINDOW MANAGEMENT:
-"Open with grid layout view
-map <leader>4 :q<cr>:vsplit<cr>:split<cr>:wincmd l<cr>:split<cr>:wincmd h<cr>
-"Open with 2 windows horizontally split
-map <leader>h :q<cr>:split<cr>
-"Close two of four panes and split windows horizontally
-map <leader>v :wincmd j<cr>:q<cr>:wincmd l<cr>:wincmd j<cr>:q<cr>
-
-"MOVING AROUND WINDOWS:
-"Better window navigation
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
-"MOVING AROUND TABS:
-map <C-e> :tabprevious<CR>
-map <C-r>   :tabnext<CR>
-map <C-t>     :tabnew<CR>
-
-"MOVING AROUND BUFFERS:
-"Tab to go to the next buffer
-nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-"Shit-Tab to go to the previous buffer
-nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-
-"TOGGLE BUFFER TO FULL SCREEN
-map <leader>fa :tab split<cr>
-map <leader>fd :tab close<cr>
-
-"OPENING FILES:
-" Opens a new tab with the current buffer's path
-" " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-"SAVING AND QUITTING:
-"Save all buffers
-map <leader>sa :w<cr>:wincmd l<cr>:w<cr>:wincmd j<cr>:w<cr>:wincmd h<cr>:w<cr>:wincmd k<cr>
-"Save current buffer
-map <leader>s :FixWhitespace<cr>:w<cr>
-"Save current buffer and quit
-map <leader>wq :FixWhitespace<cr>:wq<cr>
-"Quit current window without saving
-map <leader>q :q<cr>
-"Quit the grid view without saving
-map <leader>qg :q!<cr>:q!<cr>:q!<cr>:q!<cr>
-"Quit the grid view and save
-map <leader>wg :wq<cr>:wq<cr>:wq<cr>:wq<cr>
-
-"COPY TO CLIPBOARD
-map <leader>c :w !pbcopy<cr>
-
-"SHORTCUTS:
-"FixWhitespace
-" map <leader>fw :FixWhitespace<cr>
-"Paste
-map <leader>sp :set paste<cr>
-map <leader>np :set nopaste<cr>
-"map <leader>ff mzgg=G`z<cr>
-
-"CTAGS
-"Tag all source files and save in .git directory
-map <leader>st :ctags -R -f ./.git/tags .<cr>
-
-"============================
-"VIM STUFF:
-"============================
-
-if filereadable(expand("~/.vimrc.before"))
-	source ~/.vimrc.before
-endif
+call plug#begin('~/.local/shared/nvim/plugged')
+Plug 'tpope/vim-commentary'
+Plug 'neomake/neomake'
+Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'eugen0329/vim-esearch'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'kassio/neoterm'
+Plug 'janko-m/vim-test'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
+Plug 'xolox/vim-notes'
+Plug 'xolox/vim-misc'
+Plug 'tpope/vim-fugitive'
+Plug 'tmhedberg/matchit'
+Plug 'kana/vim-vspec'
+Plug 'kana/vim-textobj-user'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'mklabs/split-term.vim'
+call plug#end()
 
 "=============================
 "PLUGIN CONFIGURATIONS
@@ -191,44 +100,110 @@ augroup netrw_mapping
     autocmd!
     autocmd filetype netrw call NetrwMapping()
 augroup END
-
 function! NetrwMapping()
   nnoremap <buffer> <c-l> <c-w>l
 endfunction
-
 map <C-a>0 :Lexplore<cr>
 
-"=============================
-"VIM-PLUG Manager:
-"=============================
-
-call plug#begin('~/.local/shared/nvim/plugged')
-Plug 'tpope/vim-commentary'
-Plug 'neomake/neomake'
-Plug 'kien/ctrlp.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'eugen0329/vim-esearch'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'kassio/neoterm'
-Plug 'janko-m/vim-test'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
-Plug 'xolox/vim-notes'
-Plug 'xolox/vim-misc'
-Plug 'tpope/vim-fugitive'
-Plug 'tmhedberg/matchit'
-Plug 'kana/vim-vspec'
-Plug 'kana/vim-textobj-user'
-Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'mklabs/split-term.vim'
-call plug#end()
-
-"NeoMake linter
+" NEOMAKE LINTER
 " when writing a buffer
 call neomake#configure#automake('w')
-
 runtime macros/matchit.vim
+
+"" ==============
+"" CONFIGURATION SETTINGS
+"" ===============
+
+" Use Vim's native file explorer NETRW
+filetype plugin on
+
+set nocompatible
+set mouse:a
+set showcmd
+set noerrorbells
+set autoindent
+set guifont=Inconsolata\ for\ Powerline:h15
+set encoding=utf-8
+set t_Co=256
+set fillchars+=stl:\ ,stlnc:\
+set termencoding=utf-8
+set cursorline
+set equalalways
+set conceallevel=0
+let g:vim_json_syntax_conceal = 0
+set number
+set smartindent
+set autoindent
+set shiftwidth=2
+set tabstop=2
+set expandtab
+" <S-%> to jump between matching parens, etc
+set showmatch
+
+" HIGHLIGHTING
+" Search Highlighting
+" turned off by default
+set nohlsearch
+" toggle highlighting on and off
+map <leader>hh :set hlsearch! hlsearch?<cr>
+
+nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+"=========================
+"YOUR CUSTOM MAPPINGS:
+"=========================
+"***SEE VIM KEY-NOTATION IN VIM HELP FOR HELP WITH VARIOUS KEY-CODES**
+
+let mapleader = "\\"
+
+"MOVING AROUND WINDOWS:
+"Better window navigation
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+"MOVING AROUND TABS:
+map <C-e> :tabprevious<CR>
+map <C-r>   :tabnext<CR>
+map <C-t>     :tabnew<CR>
+
+"CYCLING BETWEEN BUFFERS:
+"Tab to go to the next buffer
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+"Shift-Tab to go to the previous buffer
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+"TOGGLE BUFFER TO FULL SCREEN
+map <leader>fa :tab split<cr>
+map <leader>fd :tab close<cr>
+
+"SAVING AND QUITTING:
+"Save all buffers
+map <leader>sa :w<cr>:wincmd l<cr>:w<cr>:wincmd j<cr>:w<cr>:wincmd h<cr>:w<cr>:wincmd k<cr>
+"Save current buffer
+map <leader>s :FixWhitespace<cr>:w<cr>
+"Save current buffer and quit
+map <leader>wq :FixWhitespace<cr>:wq<cr>
+"Quit current window without saving
+map <leader>q :q<cr>
+"Quit the grid view without saving
+map <leader>qg :q!<cr>:q!<cr>:q!<cr>:q!<cr>
+"Quit the grid view and save
+map <leader>wg :wq<cr>:wq<cr>:wq<cr>:wq<cr>
+
+"COPY TO CLIPBOARD
+map <leader>c :w !pbcopy<cr>
+
+"SHORTCUTS:
+"Paste
+map <leader>sp :set paste<cr>
+map <leader>np :set nopaste<cr>
+
+" BREAKING TEXT APART TO A NEW LINE
+function! BreakHere()
+    s/^\(\s*\)\(.\{-}\)\(\s*\)\(\%#\)\(\s*\)\(.*\)/\1\2\r\1\4\6
+    call histdel("/", -1)
+endfunction
+nnoremap <C-Space> :<C-u>call BreakHere()<CR>
+
