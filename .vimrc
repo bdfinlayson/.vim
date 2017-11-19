@@ -35,7 +35,7 @@ set expandtab
 " turn on by default
 set nohlsearch
 " toggle highlighting on and off
-map <leader>hh :set hlsearch! hlsearch?<CR>
+map <leader>hh :set hlsearch! hlsearch?<cr>
 
 nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
 
