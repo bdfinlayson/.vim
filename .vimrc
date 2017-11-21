@@ -96,14 +96,25 @@ tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
 
 " NETRW FILE EXPLORER
-augroup netrw_mapping
-    autocmd!
-    autocmd filetype netrw call NetrwMapping()
-augroup END
-function! NetrwMapping()
-  nnoremap <buffer> <c-l> <c-w>l
-endfunction
+" initial window size
+let g:netrw_winsize = 50
+" preview window as vertical split
+let g:netrw_preview = 1
+" let v option in right split
+let g:netrw_altv = 1
+" open file in last open buffer if possible, else create new window
+let g:netrw_browse_split = 4
+" toggle explorer
 map <C-a>0 :Lexplore<cr>
+" open file vertically to the right
+augroup netrw_mappings
+    autocmd!
+    autocmd filetype netrw call Netrw_mappings()
+augroup END
+function! Netrw_mappings()
+    " moving cursor in and out of explorer
+    nnoremap <buffer> <c-l> <c-w>l
+endfunction
 
 " NEOMAKE LINTER
 " when writing a buffer
