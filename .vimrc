@@ -36,29 +36,33 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "FZF File Finder
-map <leader>zz :FZF<cr>
+map <leader>vv :FZF<cr>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-s': 'split',
   \ 'ctrl-v': 'vsplit' }
+" note: access prev and next history with C-n and C-p
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_layout = { 'left': '~40%' }
 
 "Vim-Search
+"To switch between case-sensitive/insensitive, whole-word-match and
+" regex/literal pattern in command line use <C-o><C-r>, <C-o><C-s> or <C-o><C-w>
+" (mnemonics is set Option: Regex, case Sesnsitive, Word regex).
 let g:esearch = {
     \ 'use': ['visual', 'hlsearch', 'last'],
     \}
 
 "Neoterm
-let g:neoterm_position = 'horizontal'
-let g:neoterm_automap_keys = ',tt'
 " Useful maps
 " show/open terminal
-nnoremap <silent> ,ty :call neoterm#open()<cr>
+nnoremap <leader>ty :call neoterm#open()<cr>
 " hide/close terminal
-nnoremap <silent> ,th :call neoterm#close()<cr>
+nnoremap <leader>th :call neoterm#close()<cr>
 " clear terminal
-nnoremap <silent> ,tl :call neoterm#clear()<cr>
+nnoremap <leader>tc :call neoterm#clear()<cr>
 " kills the current job (send a <c-c>)
-nnoremap <silent> ,tc :call neoterm#kill()<cr>
+nnoremap <leader>tk :call neoterm#kill()<cr>
 " Rails commands
 command! Trspec :T bundle exec rspec
 command! -nargs=+ Tspec :T bundle exec rspec <args>
@@ -84,7 +88,8 @@ nmap <silent> <leader>tl :TestLast<CR>
 
 " DEOPLETE
 let g:deoplete#enable_at_startup = 1
-
+let g:deoplete#enable_ignore_case = 0
+let g:deoplete#enable_refresh_always = 1
 " VIM NOTES
 let g:notes_directories = ['/workspace/NOTES']
 
@@ -106,6 +111,8 @@ let g:netrw_altv = 1
 let g:netrw_browse_split = 4
 " toggle explorer
 map <C-a>0 :Lexplore<cr>
+" recursively delete non-empty directories
+let g:netrw_localrmdir='rm -rf'
 " open file vertically to the right
 augroup netrw_mappings
     autocmd!
