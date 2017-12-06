@@ -13,7 +13,13 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'kassio/neoterm'
 Plug 'janko-m/vim-test'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Ruby completion
 Plug 'fishbullet/deoplete-ruby', { 'for': 'ruby' }
+" Javascript completion
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+"Typescript completion
+Plug 'mhartington/nvim-typescript'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -90,6 +96,7 @@ nmap <silent> <leader>tl :TestLast<CR>
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 0
 let g:deoplete#enable_refresh_always = 1
+
 " VIM NOTES
 let g:notes_directories = ['/workspace/NOTES']
 
