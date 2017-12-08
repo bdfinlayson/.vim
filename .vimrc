@@ -20,6 +20,10 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 "Typescript completion
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
+"Typscript navigation
+Plug 'Quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -40,6 +44,9 @@ call plug#end()
 "use <tab> to select the popup menu
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"Tsuquyomi remappings
+nnoremap <C-[> :call tsuquyomi#goBack()<cr>
 
 "FZF File Finder
 map <leader>vv :FZF<cr>
