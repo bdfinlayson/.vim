@@ -21,7 +21,7 @@ Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'mhartington/nvim-typescript'
 Plug 'HerringtonDarkholme/yats.vim'
 "Typscript navigation
-Plug 'Quramy/tsuquyomi'
+"Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 Plug 'tpope/vim-surround'
@@ -46,7 +46,7 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "Tsuquyomi remappings
-nnoremap <C-[> :call tsuquyomi#goBack()<cr>
+"nnoremap <C-[> :call tsuquyomi#goBack()<cr>
 
 "FZF File Finder
 map <leader>vv :FZF<cr>
@@ -146,6 +146,9 @@ runtime macros/matchit.vim
 "" CONFIGURATION SETTINGS
 "" ===============
 
+" Automatically execute ctags each time a file is saved
+autocmd BufWritePost * call system("ctags -R")
+
 " Use Vim's native file explorer NETRW
 filetype plugin on
 
@@ -196,9 +199,9 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 "MOVING AROUND TABS:
-map <C-e> :tabprevious<CR>
-map <C-r>   :tabnext<CR>
-map <C-t>     :tabnew<CR>
+map <leader>1 :tabprevious<CR>
+map <leader>2   :tabnext<CR>
+map <leader>t     :tabnew<CR>
 
 "CYCLING BETWEEN BUFFERS:
 "Tab to go to the next buffer
