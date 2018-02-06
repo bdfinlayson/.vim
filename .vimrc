@@ -201,6 +201,11 @@ runtime macros/matchit.vim
 " Generate Ctags
 noremap <leader>r call system("ctags -R")<cr>
 
+" Gutentags
+" Send tag files to a separate directory
+" So as to not pollute the working directory
+let g:gutentags_cache_dir = '~/.git/tags'
+
 " Use Vim's native file explorer NETRW
 filetype plugin on
 
