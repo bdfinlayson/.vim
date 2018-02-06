@@ -79,6 +79,20 @@ let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 "show hidden files by default
 let NERDTreeShowHidden=1
+" Check if NERDTree is open or active
+function! IsNERDTreeOpen()
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+    NERDTreeFind
+    wincmd p
+  endif
+endfunction
+" Highlight currently open buffer in NERDTree
+autocmd BufEnter * call SyncTree()
 
 "Tsuquyomi remappings
 "nnoremap <C-[> :call tsuquyomi#goBack()<cr>
