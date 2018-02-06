@@ -3,6 +3,14 @@
 "=============================
 
 call plug#begin('~/.local/shared/nvim/plugged')
+"Syntax
+Plug 'sheerun/vim-polyglot'
+
+"Nerdtree
+Plug 'scrooloose/nerdtree'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
 Plug 'tpope/vim-commentary'
 Plug 'neomake/neomake'
 Plug 'kien/ctrlp.vim'
@@ -24,6 +32,16 @@ Plug 'HerringtonDarkholme/yats.vim'
 "Plug 'Quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
+"CTags Helpers
+Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
+
+"Elixir support
+Plug 'elixir-editors/vim-elixir'
+Plug 'c-brenn/phoenix.vim'
+Plug 'tpope/vim-projectionist'
+Plug 'slashmili/alchemist.vim'
+
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -44,6 +62,23 @@ call plug#end()
 "use <tab> to select the popup menu
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+"Alchemist
+let g:alchemist_tag_disable = 1
+
+"Nerdtree
+"open filetree automatically if no file specified at launch
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"open the filetree
+map <C-n> :NERDTreeToggle<CR>
+"close vim if nerdtree is last window open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"change the default arrows
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+"show hidden files by default
+let NERDTreeShowHidden=1
 
 "Tsuquyomi remappings
 "nnoremap <C-[> :call tsuquyomi#goBack()<cr>
@@ -139,7 +174,8 @@ endfunction
 
 " NEOMAKE LINTER
 " when writing a buffer
-call neomake#configure#automake('w')
+autocmd! BufWritePost * Neomake
+"call neomake#configure#automake('w')
 runtime macros/matchit.vim
 
 "" ==============
@@ -147,7 +183,9 @@ runtime macros/matchit.vim
 "" ===============
 
 " Automatically execute ctags each time a file is saved
-autocmd BufWritePost * call system("ctags -R")
+" autocmd BufWritePost * call system("ctags -R")
+" Generate Ctags
+noremap <leader>r call system("ctags -R")<cr>
 
 " Use Vim's native file explorer NETRW
 filetype plugin on
