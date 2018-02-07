@@ -115,6 +115,9 @@ autocmd FileType nerdtree noremap <buffer> <leader><Tab> <nop>
 " Ale linter
 " control alewarning hightlight color
 highlight ALEWarning ctermbg=Red
+" jump between errors quickly
+nmap <silent> <leader>3 <Plug>(ale_previous_wrap)
+nmap <silent> <leader>4 <Plug>(ale_next_wrap)
 
 "FZF File Finder
 map <leader>vv :FZF<cr>
