@@ -6,13 +6,16 @@ call plug#begin('~/.local/shared/nvim/plugged')
 "Syntax
 Plug 'sheerun/vim-polyglot'
 
+"Linters
+Plug 'w0rp/ale'
+" Plug 'neomake/neomake'
+
 "Nerdtree
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'tpope/vim-commentary'
-Plug 'neomake/neomake'
 Plug 'kien/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -42,6 +45,7 @@ Plug 'c-brenn/phoenix.vim'
 Plug 'tpope/vim-projectionist'
 Plug 'slashmili/alchemist.vim'
 
+Plug 'matze/vim-move'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -66,6 +70,9 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 "Alchemist
 let g:alchemist_tag_disable = 1
 
+" Vim move bindings
+let g:move_key_modifier = '\'
+
 "Nerdtree
 "open filetree automatically if no file specified at launch
 autocmd StdinReadPre * let s:std_in=1
@@ -75,6 +82,7 @@ map <C-n> :NERDTreeToggle<CR>
 "close vim if nerdtree is last window open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "change the default arrows
+let NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 "show hidden files by default
@@ -93,9 +101,20 @@ function! SyncTree()
 endfunction
 " Highlight currently open buffer in NERDTree
 autocmd BufEnter * call SyncTree()
+" Automaticallly delete the buffer of the file you just deleted in Nerdtree
+let NERDTreeAutoDeleteBuffer = 1
+" Remove press for help and other text
+let NERDTreeMinimalUI = 1
+" Prevent tab on Nerdtree buffer (breaks everything otherwise)
+autocmd FileType nerdtree noremap <buffer> <Tab> <nop>
+autocmd FileType nerdtree noremap <buffer> <leader><Tab> <nop>
 
 "Tsuquyomi remappings
 "nnoremap <C-[> :call tsuquyomi#goBack()<cr>
+
+" Ale linter
+" control alewarning hightlight color
+highlight ALEWarning ctermbg=Red
 
 "FZF File Finder
 map <leader>vv :FZF<cr>
@@ -188,9 +207,9 @@ endfunction
 
 " NEOMAKE LINTER
 " when writing a buffer
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 "call neomake#configure#automake('w')
-runtime macros/matchit.vim
+" runtime macros/matchit.vim
 
 "" ==============
 "" CONFIGURATION SETTINGS
@@ -198,6 +217,10 @@ runtime macros/matchit.vim
 
 " Automatically execute ctags each time a file is saved
 " autocmd BufWritePost * call system("ctags -R")
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_missing = 1
+" Display indicator of tag generation progress in status line
+set statusline+=%{gutentags#statusline()}
 " Generate Ctags
 noremap <leader>r call system("ctags -R")<cr>
 
@@ -264,7 +287,7 @@ map <leader>t     :tabnew<CR>
 "Tab to go to the next buffer
 nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 "Shift-Tab to go to the previous buffer
-nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+nnoremap  <silent> <leader><tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 
 "TOGGLE BUFFER TO FULL SCREEN
 map <leader>fa :tab split<cr>
