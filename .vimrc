@@ -71,7 +71,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:alchemist_tag_disable = 1
 
 " Vim move bindings
-let g:move_key_modifier = '\'
+let g:move_key_modifier = 'S'
 
 "Nerdtree
 "open filetree automatically if no file specified at launch
@@ -223,7 +223,7 @@ endfunction
 let g:gutentags_generate_on_write = 1
 let g:gutentags_generate_on_missing = 1
 " Display indicator of tag generation progress in status line
-set statusline+=%{gutentags#statusline()}
+" set statusline+=%{gutentags#statusline()}
 " Generate Ctags
 noremap <leader>r call system("ctags -R")<cr>
 
